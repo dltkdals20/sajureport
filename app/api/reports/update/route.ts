@@ -5,8 +5,9 @@ import { supabaseServer } from "../../../../lib/supabaseServer";
 export const runtime = "nodejs";
 
 function getReportId(report: Report) {
-  const meta = report.reportMeta as Record<string, string | undefined>;
-  return meta.reportId || meta.id || "";
+  type ReportMetaLike = { reportId?: string; id?: string };
+  const meta = report.reportMeta as unknown as ReportMetaLike;
+  return meta.reportId ?? meta.id ?? "";
 }
 
 export async function POST(req: Request) {
