@@ -35,14 +35,14 @@ export function PillarsTable({
   });
 
   return (
-    <div style={cardStyle} className="border px-4 py-4">
+    <div style={cardStyle} className="border px-3 py-3 sm:px-4 sm:py-4">
       <div className="mb-4 flex items-center gap-3">
         <span
-          className="h-10 w-1.5 rounded-full"
+          className="h-8 w-1.5 rounded-full sm:h-10"
           style={{ backgroundColor: accentColor }}
         />
         <div>
-          <p className="text-lg font-semibold" style={{ color: textColor }}>
+          <p className="text-base font-semibold sm:text-lg" style={{ color: textColor }}>
             사주팔자 (Four Pillars)
           </p>
           <p className="text-xs" style={{ color: mutedText }}>
@@ -51,13 +51,13 @@ export function PillarsTable({
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-base leading-6">
+        <table className="w-full min-w-[520px] border-collapse text-sm leading-6 sm:text-base">
           <thead>
             <tr>
               {columns.map(({ key, label, subLabel }) => (
                 <th
                   key={key}
-                  className="py-3 text-center text-base font-semibold"
+                  className="py-2 text-center text-sm font-semibold sm:py-3 sm:text-base"
                   style={{
                     color: textColor,
                     borderBottom: `1px solid ${borderColor}`,
@@ -65,7 +65,7 @@ export function PillarsTable({
                   }}
                 >
                   <div>{label}</div>
-                  <div className="text-xs font-medium" style={{ color: mutedText }}>
+                  <div className="text-[11px] font-medium sm:text-xs" style={{ color: mutedText }}>
                     ({subLabel})
                   </div>
                 </th>
@@ -82,7 +82,7 @@ export function PillarsTable({
                 return (
                   <td
                     key={key}
-                    className="border-x px-4 py-6 text-center"
+                    className="border-x px-3 py-4 text-center sm:px-4 sm:py-6"
                     style={{ borderColor }}
                   >
                     <div className="mb-3 flex justify-center">
@@ -93,7 +93,10 @@ export function PillarsTable({
                         {tenGod}
                       </span>
                     </div>
-                    <div className="text-4xl font-semibold" style={{ color: textColor }}>
+                    <div
+                      className="text-3xl font-semibold sm:text-4xl"
+                      style={{ color: textColor }}
+                    >
                       {cell?.stem ?? "-"}
                     </div>
                     <div className="mt-2 text-sm font-medium" style={{ color: mutedText }}>
@@ -111,7 +114,7 @@ export function PillarsTable({
                 return (
                   <td
                     key={key}
-                    className="border-x border-t px-4 py-6 text-center"
+                    className="border-x border-t px-3 py-4 text-center sm:px-4 sm:py-6"
                     style={{ borderColor }}
                   >
                     <div className="mb-3 flex justify-center">
@@ -122,7 +125,10 @@ export function PillarsTable({
                         {tenGod}
                       </span>
                     </div>
-                    <div className="text-4xl font-semibold" style={{ color: textColor }}>
+                    <div
+                      className="text-3xl font-semibold sm:text-4xl"
+                      style={{ color: textColor }}
+                    >
                       {cell?.branch ?? "-"}
                     </div>
                     <div className="mt-2 text-sm font-medium" style={{ color: mutedText }}>

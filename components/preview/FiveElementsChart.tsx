@@ -32,7 +32,7 @@ export function FiveElementsChart({
   }));
 
   return (
-    <div style={cardStyle} className="border px-4 py-4">
+    <div style={cardStyle} className="border px-3 py-4 sm:px-4 sm:py-4">
       <div className="flex items-center justify-between">
         <p className="text-sm font-semibold" style={{ color: textColor }}>
           오행 분포
@@ -41,7 +41,7 @@ export function FiveElementsChart({
           ratio / count
         </p>
       </div>
-      <div className="mt-4 h-48">
+      <div className="mt-4 h-40 sm:h-48">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 8, right: 16 }}>
             <XAxis type="number" hide domain={[0, 100]} />

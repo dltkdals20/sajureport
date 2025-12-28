@@ -31,7 +31,7 @@ export function YongsinTable({
 }: YongsinTableProps) {
   if (!yongsin) return null;
   return (
-    <div style={cardStyle} className="border px-4 py-4">
+    <div style={cardStyle} className="border px-3 py-4 sm:px-4 sm:py-4">
       <p className="mb-3 text-sm font-semibold" style={{ color: textColor }}>
         용신 분석
       </p>
@@ -50,7 +50,7 @@ export function YongsinTable({
         ))}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-sm">
+        <table className="w-full min-w-[520px] border-collapse text-xs sm:text-sm">
           <thead>
             <tr>
               <th className="py-2 text-left" style={{ color: mutedText }}>
@@ -69,7 +69,7 @@ export function YongsinTable({
               <tr key={`${row.element}-${index}`} className="border-t" style={{ borderColor }}>
                 <td className="py-2 font-medium">{row.element}</td>
                 <td className="py-2">{row.type}</td>
-                <td className="py-2" style={{ color: mutedText }}>
+                <td className="py-2 break-words" style={{ color: mutedText }}>
                   {row.comment}
                 </td>
               </tr>

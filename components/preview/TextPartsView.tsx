@@ -30,7 +30,7 @@ export function TextPartsView({
               {part.highlights.map((text) => (
                 <p
                   key={text}
-                  className="text-lg font-semibold"
+                  className="text-base sm:text-lg font-semibold"
                   style={{ color: accentColor }}
                 >
                   {text}

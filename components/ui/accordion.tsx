@@ -30,13 +30,13 @@ export function AccordionItem({
       )}
       {...props}
     >
-      <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 font-medium">
+      <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-2 font-medium sm:px-4 sm:py-3">
         <span>{title}</span>
         <span className="text-lg text-current opacity-60 transition group-open:rotate-45">
           +
         </span>
       </summary>
-      <div className="px-4 pb-4 text-sm">{children}</div>
+      <div className="px-3 pb-3 text-sm sm:px-4 sm:pb-4">{children}</div>
     </details>
   );
 }

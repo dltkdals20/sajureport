@@ -71,13 +71,13 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
     : {};
 
   return (
-    <div className="rounded-3xl border border-neutral-200/60 bg-white/40 p-4">
+    <div className="rounded-3xl border border-neutral-200/60 bg-white/40 p-3 sm:p-4">
       <div
         style={{ ...containerStyle, ...a4Style, borderColor: theme.colors.border }}
-        className="rounded-3xl border px-6 py-8"
+        className="rounded-3xl border px-3 py-4 sm:px-6 sm:py-8"
       >
         <div style={{ ...innerStyle, gap: sectionGap }} className="flex flex-col">
-          <div style={{ ...cardStyle }} className="border px-6 py-6">
+          <div style={{ ...cardStyle }} className="border px-3 py-4 sm:px-6 sm:py-6">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -100,7 +100,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 </p>
               </div>
               <div
-                className="rounded-2xl border px-4 py-3 text-sm"
+                className="rounded-2xl border px-3 py-3 text-sm sm:px-4"
                 style={{
                   borderColor: theme.colors.border,
                   backgroundColor: `${theme.colors.accent}15`
@@ -132,7 +132,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             </div>
           </div>
 
-          <div style={cardStyle} className="border px-6 py-6">
+          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
             <p className="text-sm font-semibold" style={subHeadingStyle}>
               대상 정보
             </p>
@@ -196,7 +196,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             />
           </div>
 
-          <div style={cardStyle} className="border px-6 py-6">
+          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <p className="text-xs" style={{ color: theme.colors.mutedText }}>
@@ -223,7 +223,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             </div>
           </div>
 
-          <div style={cardStyle} className="border px-6 py-6">
+          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
             <p className="mb-2 text-sm font-semibold" style={{ color: theme.colors.text }}>
               일간 분석
             </p>
@@ -232,7 +232,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayMasterHighlights.map((text) => (
                   <p
                     key={text}
-                    className="text-lg font-semibold"
+                    className="text-base sm:text-lg font-semibold"
                     style={{ color: theme.colors.accent }}
                   >
                     {text}
@@ -261,7 +261,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             </div>
           </div>
 
-          <div style={cardStyle} className="border px-6 py-6">
+          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
             <p className="mb-2 text-sm font-semibold" style={{ color: theme.colors.text }}>
               일주 분석
             </p>
@@ -270,7 +270,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayPillarHighlights.map((text) => (
                   <p
                     key={text}
-                    className="text-lg font-semibold"
+                    className="text-base sm:text-lg font-semibold"
                     style={{ color: theme.colors.accent }}
                   >
                     {text}
