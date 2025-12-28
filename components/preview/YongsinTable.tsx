@@ -13,7 +13,7 @@ interface YongsinTableProps {
 function Chip({ label, accentColor }: { label: string; accentColor: string }) {
   return (
     <span
-      className="rounded-full px-2.5 py-1 text-xs"
+      className="rounded-full px-2.5 py-1 text-sm"
       style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
     >
       {label}
@@ -32,7 +32,7 @@ export function YongsinTable({
   if (!yongsin) return null;
   return (
     <div style={cardStyle} className="border px-3 py-4 sm:px-4 sm:py-4">
-      <p className="mb-3 text-sm font-semibold" style={{ color: textColor }}>
+      <p className="mb-3 text-base font-semibold" style={{ color: textColor }}>
         용신 분석
       </p>
       <div className="mb-4 flex flex-wrap gap-2">
@@ -50,16 +50,16 @@ export function YongsinTable({
         ))}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] border-collapse text-xs sm:text-sm">
+        <table className="w-full min-w-[520px] border-collapse text-sm sm:text-base">
           <thead>
             <tr>
-              <th className="py-2 text-left" style={{ color: mutedText }}>
+              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
                 오행
               </th>
-              <th className="py-2 text-left" style={{ color: mutedText }}>
+              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
                 구분
               </th>
-              <th className="py-2 text-left" style={{ color: mutedText }}>
+              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
                 코멘트
               </th>
             </tr>

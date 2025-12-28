@@ -21,6 +21,7 @@ const shadowMap: Record<string, string> = {
 
 export function PreviewPanel({ report }: PreviewPanelProps) {
   const theme = report.theme;
+  const baseFontSize = Math.max(theme.typography.baseFontSize, 16);
   const cardStyle: React.CSSProperties = {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
@@ -35,12 +36,12 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
   const containerStyle: React.CSSProperties = {
     backgroundColor: theme.colors.background,
     color: theme.colors.text,
-    fontSize: theme.typography.baseFontSize,
+    fontSize: baseFontSize,
     fontFamily:
       theme.typography.fontFamily === "serif"
         ? "var(--font-display)"
         : "var(--font-body)",
-    lineHeight: 1.7
+    lineHeight: 1.8
   };
 
   const headingStyle: React.CSSProperties = {
@@ -82,7 +83,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
               <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                 <div>
                   <p
-                    className="text-xs uppercase tracking-[0.2em]"
+                    className="text-sm uppercase tracking-[0.2em]"
                     style={{ color: theme.colors.mutedText }}
                   >
                     Saju Report
@@ -90,17 +91,17 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                   <h1 className="mt-2 font-display font-semibold" style={headingStyle}>
                     {report.reportMeta.title}
                   </h1>
-                  <p className="text-sm" style={{ color: theme.colors.mutedText }}>
+                  <p className="text-base" style={{ color: theme.colors.mutedText }}>
                     {report.subject.name}
                     {report.subject.gender ? ` · ${report.subject.gender}` : ""} · {report.reportMeta.createdAt}
                   </p>
                 </div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   리포트 ID: {report.reportMeta.reportId}
                 </p>
               </div>
               <div
-                className="rounded-2xl border px-3 py-3 text-sm sm:px-4"
+                className="rounded-2xl border px-3 py-3 text-base leading-7 sm:px-4"
                 style={{
                   borderColor: theme.colors.border,
                   backgroundColor: `${theme.colors.accent}15`
@@ -112,7 +113,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {(report.dashboard.part0.tags ?? []).map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full px-3 py-1 text-xs"
+                    className="rounded-full px-3 py-1 text-sm"
                     style={{
                       backgroundColor: `${theme.colors.accent}22`,
                       color: theme.colors.accent
@@ -123,7 +124,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 ))}
               </div>
               {report.dashboard.part0.alerts?.length > 0 && (
-                <div className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <div className="text-sm" style={{ color: theme.colors.mutedText }}>
                   {report.dashboard.part0.alerts.map((alert) => (
                     <p key={alert}>• {alert}</p>
                   ))}
@@ -133,12 +134,12 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
           </div>
 
           <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
-            <p className="text-sm font-semibold" style={subHeadingStyle}>
+            <p className="text-base font-semibold" style={subHeadingStyle}>
               대상 정보
             </p>
-            <div className="mt-4 grid gap-3 text-sm md:grid-cols-2">
+            <div className="mt-4 grid gap-3 text-base md:grid-cols-2">
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   출생 정보
                 </p>
                 <p>
@@ -146,7 +147,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 </p>
               </div>
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   나이
                 </p>
                 <p>
@@ -154,13 +155,13 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 </p>
               </div>
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   용신
                 </p>
                 <p>{(report.subject as Record<string, string>).yongsin ?? "-"}</p>
               </div>
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   출처
                 </p>
                 <p>{report.reportMeta.source}</p>
@@ -199,24 +200,24 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
           <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   강약
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-base font-semibold">
                   {report.dashboard.part1.strength?.label ?? "-"}
                 </p>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   {report.dashboard.part1.strength?.basis?.join(" · ") ?? "-"}
                 </p>
               </div>
               <div>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   구조
                 </p>
-                <p className="text-sm font-semibold">
+                <p className="text-base font-semibold">
                   {report.dashboard.part1.structure?.gyeokguk ?? "-"}
                 </p>
-                <p className="text-xs" style={{ color: theme.colors.mutedText }}>
+                <p className="text-sm" style={{ color: theme.colors.mutedText }}>
                   {report.dashboard.part1.structure?.note ?? "-"}
                 </p>
               </div>
@@ -224,7 +225,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
           </div>
 
           <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
-            <p className="mb-2 text-sm font-semibold" style={{ color: theme.colors.text }}>
+            <p className="mb-2 text-base font-semibold" style={{ color: theme.colors.text }}>
               일간 분석
             </p>
             {report.dashboard.part1.dayMasterHighlights?.length ? (
@@ -232,7 +233,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayMasterHighlights.map((text) => (
                   <p
                     key={text}
-                    className="text-base sm:text-lg font-semibold"
+                    className="text-lg sm:text-xl font-semibold"
                     style={{ color: theme.colors.accent }}
                   >
                     {text}
@@ -245,7 +246,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayMasterKeywords.map((keyword) => (
                   <span
                     key={keyword}
-                    className="rounded-full px-3 py-1 text-xs"
+                    className="rounded-full px-3 py-1 text-sm"
                     style={{
                       backgroundColor: `${theme.colors.accent}22`,
                       color: theme.colors.accent
@@ -256,13 +257,13 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 ))}
               </div>
             ) : null}
-            <div className="whitespace-pre-wrap text-sm leading-6">
+            <div className="whitespace-pre-wrap text-base leading-7">
               {report.dashboard.part1.dayMasterAnalysis || "(내용이 비어 있습니다)"}
             </div>
           </div>
 
           <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
-            <p className="mb-2 text-sm font-semibold" style={{ color: theme.colors.text }}>
+            <p className="mb-2 text-base font-semibold" style={{ color: theme.colors.text }}>
               일주 분석
             </p>
             {report.dashboard.part1.dayPillarHighlights?.length ? (
@@ -270,7 +271,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayPillarHighlights.map((text) => (
                   <p
                     key={text}
-                    className="text-base sm:text-lg font-semibold"
+                    className="text-lg sm:text-xl font-semibold"
                     style={{ color: theme.colors.accent }}
                   >
                     {text}
@@ -283,7 +284,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 {report.dashboard.part1.dayPillarKeywords.map((keyword) => (
                   <span
                     key={keyword}
-                    className="rounded-full px-3 py-1 text-xs"
+                    className="rounded-full px-3 py-1 text-sm"
                     style={{
                       backgroundColor: `${theme.colors.accent}22`,
                       color: theme.colors.accent
@@ -294,7 +295,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
                 ))}
               </div>
             ) : null}
-            <div className="whitespace-pre-wrap text-sm leading-6">
+            <div className="whitespace-pre-wrap text-base leading-7">
               {report.dashboard.part1.dayPillarAnalysis || "(내용이 비어 있습니다)"}
             </div>
           </div>
@@ -310,7 +311,7 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
 
           <div style={{ display: "grid", gap: sectionGap }}>
             <div>
-              <p className="mb-3 text-sm font-semibold" style={subHeadingStyle}>
+              <p className="mb-3 text-base font-semibold" style={subHeadingStyle}>
                 Part2+ 원문
               </p>
               <TextPartsView

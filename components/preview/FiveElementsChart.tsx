@@ -34,10 +34,10 @@ export function FiveElementsChart({
   return (
     <div style={cardStyle} className="border px-3 py-4 sm:px-4 sm:py-4">
       <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold" style={{ color: textColor }}>
+        <p className="text-base font-semibold" style={{ color: textColor }}>
           오행 분포
         </p>
-        <p className="text-xs" style={{ color: mutedText }}>
+        <p className="text-sm" style={{ color: mutedText }}>
           ratio / count
         </p>
       </div>
@@ -49,7 +49,7 @@ export function FiveElementsChart({
               type="category"
               dataKey="name"
               width={40}
-              tick={{ fill: mutedText, fontSize: 12 }}
+              tick={{ fill: mutedText, fontSize: 13 }}
             />
             <Tooltip
               cursor={{ fill: "rgba(0,0,0,0.04)" }}
@@ -63,7 +63,7 @@ export function FiveElementsChart({
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-3 grid grid-cols-2 gap-2 text-xs" style={{ color: mutedText }}>
+      <div className="mt-3 grid grid-cols-2 gap-2 text-sm" style={{ color: mutedText }}>
         {data.map((item) => (
           <div key={item.name} className="flex items-center justify-between">
             <span>{item.name}</span>

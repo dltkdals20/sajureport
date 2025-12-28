@@ -27,7 +27,7 @@ export function AnnualFortuneView({
 
   return (
     <div>
-      <p className="mb-3 text-sm font-semibold" style={{ color: textColor }}>
+      <p className="mb-3 text-base font-semibold" style={{ color: textColor }}>
         2026 신년운세
       </p>
       <Accordion>
@@ -43,7 +43,7 @@ export function AnnualFortuneView({
                 {section.highlights.map((text) => (
                   <p
                     key={text}
-                    className="text-base sm:text-lg font-semibold"
+                    className="text-lg sm:text-xl font-semibold"
                     style={{ color: accentColor }}
                   >
                     {text}
@@ -56,7 +56,7 @@ export function AnnualFortuneView({
                 {section.keywords.map((keyword) => (
                   <span
                     key={keyword}
-                    className="rounded-full px-3 py-1 text-xs"
+                    className="rounded-full px-3 py-1 text-sm"
                     style={{
                       backgroundColor: `${accentColor}22`,
                       color: accentColor
@@ -68,7 +68,7 @@ export function AnnualFortuneView({
               </div>
             ) : null}
             <div
-              className="whitespace-pre-wrap text-sm leading-6"
+              className="whitespace-pre-wrap text-base leading-7"
               style={{ color: textColor }}
             >
               {section.body || "(내용이 비어 있습니다)"}

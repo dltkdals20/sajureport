@@ -30,7 +30,7 @@ export function TextPartsView({
               {part.highlights.map((text) => (
                 <p
                   key={text}
-                  className="text-base sm:text-lg font-semibold"
+                  className="text-lg sm:text-xl font-semibold"
                   style={{ color: accentColor }}
                 >
                   {text}
@@ -40,13 +40,13 @@ export function TextPartsView({
           ) : null}
           {part.keywords?.length ? (
             <div className="mb-3 flex flex-wrap gap-2">
-              {part.keywords.map((keyword) => (
-                <span
-                  key={keyword}
-                  className="rounded-full px-3 py-1 text-xs"
-                  style={{
-                    backgroundColor: `${accentColor}22`,
-                    color: accentColor
+                {part.keywords.map((keyword) => (
+                  <span
+                    key={keyword}
+                    className="rounded-full px-3 py-1 text-sm"
+                    style={{
+                      backgroundColor: `${accentColor}22`,
+                      color: accentColor
                   }}
                 >
                   {keyword}
@@ -55,7 +55,7 @@ export function TextPartsView({
             </div>
           ) : null}
           <div
-            className="whitespace-pre-wrap text-sm leading-6"
+            className="whitespace-pre-wrap text-base leading-7"
             style={{ color: textColor }}
           >
             {part.body || "(내용이 비어 있습니다)"}

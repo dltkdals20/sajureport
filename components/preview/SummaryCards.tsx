@@ -25,11 +25,11 @@ export function SummaryCards({
           style={cardStyle}
           className="flex flex-col gap-2 border px-3 py-3 sm:px-4 sm:py-4"
         >
-          <p className="text-xs uppercase tracking-wide" style={{ color: mutedText }}>
+          <p className="text-sm uppercase tracking-wide" style={{ color: mutedText }}>
             {card.title}
           </p>
           <p
-            className="text-lg font-semibold"
+            className="text-xl font-semibold sm:text-2xl"
             style={{ color: textColor }}
           >
             {card.value}
