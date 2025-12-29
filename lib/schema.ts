@@ -43,6 +43,7 @@ export interface ReportMeta {
   templateVersion: string;
   author: string;
   source: string;
+  consultUrl?: string;
 }
 
 export interface SubjectInfo {

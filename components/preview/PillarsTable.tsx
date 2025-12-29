@@ -50,14 +50,14 @@ export function PillarsTable({
           </p>
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] border-collapse text-base leading-7 sm:text-lg">
+      <div className="overflow-x-visible">
+        <table className="w-full table-fixed border-collapse text-sm leading-6 sm:text-lg">
           <thead>
             <tr>
               {columns.map(({ key, label, subLabel }) => (
                 <th
                   key={key}
-                  className="py-2 text-center text-base font-semibold sm:py-3 sm:text-lg"
+                  className="py-1 text-center text-xs font-semibold sm:py-3 sm:text-lg"
                   style={{
                     color: textColor,
                     borderBottom: `1px solid ${borderColor}`,
@@ -65,7 +65,7 @@ export function PillarsTable({
                   }}
                 >
                   <div>{label}</div>
-                  <div className="text-sm font-medium" style={{ color: mutedText }}>
+                  <div className="text-[10px] font-medium sm:text-sm" style={{ color: mutedText }}>
                     ({subLabel})
                   </div>
                 </th>
@@ -82,24 +82,24 @@ export function PillarsTable({
                 return (
                   <td
                     key={key}
-                    className="border-x px-3 py-4 text-center sm:px-4 sm:py-6"
+                    className="border-x px-2 py-3 text-center sm:px-4 sm:py-6"
                     style={{ borderColor }}
                   >
                     <div className="mb-3 flex justify-center">
                       <span
-                        className="rounded-full px-3 py-1 text-sm font-semibold"
+                        className="rounded-full px-2.5 py-1 text-[11px] font-semibold sm:px-3 sm:text-sm"
                         style={getBadgeStyle(active)}
                       >
                         {tenGod}
                       </span>
                     </div>
                     <div
-                      className="text-3xl font-semibold sm:text-4xl"
+                      className="text-2xl font-semibold sm:text-4xl"
                       style={{ color: textColor }}
                     >
                       {cell?.stem ?? "-"}
                     </div>
-                    <div className="mt-2 text-base font-medium" style={{ color: mutedText }}>
+                    <div className="mt-2 text-xs font-medium sm:text-base" style={{ color: mutedText }}>
                       {label}
                     </div>
                   </td>
@@ -114,24 +114,24 @@ export function PillarsTable({
                 return (
                   <td
                     key={key}
-                    className="border-x border-t px-3 py-4 text-center sm:px-4 sm:py-6"
+                    className="border-x border-t px-2 py-3 text-center sm:px-4 sm:py-6"
                     style={{ borderColor }}
                   >
                     <div className="mb-3 flex justify-center">
                       <span
-                        className="rounded-full px-3 py-1 text-sm font-semibold"
+                        className="rounded-full px-2.5 py-1 text-[11px] font-semibold sm:px-3 sm:text-sm"
                         style={getBadgeStyle(false)}
                       >
                         {tenGod}
                       </span>
                     </div>
                     <div
-                      className="text-3xl font-semibold sm:text-4xl"
+                      className="text-2xl font-semibold sm:text-4xl"
                       style={{ color: textColor }}
                     >
                       {cell?.branch ?? "-"}
                     </div>
-                    <div className="mt-2 text-base font-medium" style={{ color: mutedText }}>
+                    <div className="mt-2 text-xs font-medium sm:text-base" style={{ color: mutedText }}>
                       {label}
                     </div>
                   </td>
@@ -142,7 +142,7 @@ export function PillarsTable({
         </table>
       </div>
       {hiddenStems && (
-        <div className="mt-3 text-sm" style={{ color: mutedText }}>
+        <div className="mt-3 text-xs sm:text-sm" style={{ color: mutedText }}>
           {columns.map(({ key, label }) => (
             <p key={key}>
               {label} 숨은 기운: {hiddenStems[key]?.join(", ") ?? "-"}

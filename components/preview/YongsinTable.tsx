@@ -5,63 +5,47 @@ interface YongsinTableProps {
   yongsin: YongsinInfo;
   cardStyle: React.CSSProperties;
   borderColor: string;
-  textColor: string;
-  mutedText: string;
-  accentColor: string;
+  className?: string;
 }
 
-function Chip({ label, accentColor }: { label: string; accentColor: string }) {
-  return (
-    <span
-      className="rounded-full px-2.5 py-1 text-sm"
-      style={{ backgroundColor: `${accentColor}22`, color: accentColor }}
-    >
-      {label}
-    </span>
-  );
+function Chip({ label }: { label: string }) {
+  return <span className="analysis-chip">{label}</span>;
 }
 
 export function YongsinTable({
   yongsin,
   cardStyle,
   borderColor,
-  textColor,
-  mutedText,
-  accentColor
+  className
 }: YongsinTableProps) {
   if (!yongsin) return null;
   return (
-    <div style={cardStyle} className="border px-3 py-4 sm:px-4 sm:py-4">
-      <p className="mb-3 text-base font-semibold" style={{ color: textColor }}>
-        용신 분석
-      </p>
+    <div
+      style={cardStyle}
+      className={`border px-3 py-4 sm:px-4 sm:py-4 ${className ?? ""}`}
+    >
+      <p className="analysis-title mb-3">용신 분석</p>
       <div className="mb-4 flex flex-wrap gap-2">
         {yongsin.best?.map((item) => (
-          <Chip key={`best-${item}`} label={`용신 ${item}`} accentColor={accentColor} />
+          <Chip key={`best-${item}`} label={`용신 ${item}`} />
         ))}
         {yongsin.good?.map((item) => (
-          <Chip key={`good-${item}`} label={`희신 ${item}`} accentColor={accentColor} />
+          <Chip key={`good-${item}`} label={`희신 ${item}`} />
         ))}
         {yongsin.bad?.map((item) => (
-          <Chip key={`bad-${item}`} label={`기신 ${item}`} accentColor={accentColor} />
+          <Chip key={`bad-${item}`} label={`기신 ${item}`} />
         ))}
         {yongsin.avoid?.map((item) => (
-          <Chip key={`avoid-${item}`} label={`주의 ${item}`} accentColor={accentColor} />
+          <Chip key={`avoid-${item}`} label={`주의 ${item}`} />
         ))}
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[520px] border-collapse text-sm sm:text-base">
+        <table className="analysis-table w-full min-w-[520px] border-collapse text-sm sm:text-base">
           <thead>
             <tr>
-              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
-                오행
-              </th>
-              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
-                구분
-              </th>
-              <th className="py-2 text-left font-medium" style={{ color: mutedText }}>
-                코멘트
-              </th>
+              <th className="py-2 text-left">오행</th>
+              <th className="py-2 text-left">구분</th>
+              <th className="py-2 text-left">코멘트</th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +53,7 @@ export function YongsinTable({
               <tr key={`${row.element}-${index}`} className="border-t" style={{ borderColor }}>
                 <td className="py-2 font-medium">{row.element}</td>
                 <td className="py-2">{row.type}</td>
-                <td className="py-2 break-words" style={{ color: mutedText }}>
+                <td className="py-2 break-words">
                   {row.comment}
                 </td>
               </tr>

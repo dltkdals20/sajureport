@@ -6,14 +6,12 @@ interface TextPartsViewProps {
   parts: TextPart[];
   cardStyle: React.CSSProperties;
   textColor: string;
-  accentColor: string;
 }
 
 export function TextPartsView({
   parts,
   cardStyle,
-  textColor,
-  accentColor
+  textColor
 }: TextPartsViewProps) {
   if (!parts?.length) return null;
   return (
@@ -23,43 +21,31 @@ export function TextPartsView({
           key={part.partId}
           title={`${part.partId} · ${part.title}`}
           defaultOpen
+          className="analysis-card"
           style={cardStyle}
         >
           {part.highlights?.length ? (
-            <div className="mb-3 space-y-2">
+            <div className="analysis-highlight">
               {part.highlights.map((text) => (
-                <p
-                  key={text}
-                  className="text-lg sm:text-xl font-semibold"
-                  style={{ color: accentColor }}
-                >
-                  {text}
-                </p>
+                <p key={text}>{text}</p>
               ))}
             </div>
           ) : null}
+          <div
+            className="analysis-body whitespace-pre-wrap"
+            style={{ color: textColor }}
+          >
+            {part.body || "(내용이 비어 있습니다)"}
+          </div>
           {part.keywords?.length ? (
-            <div className="mb-3 flex flex-wrap gap-2">
-                {part.keywords.map((keyword) => (
-                  <span
-                    key={keyword}
-                    className="rounded-full px-3 py-1 text-sm"
-                    style={{
-                      backgroundColor: `${accentColor}22`,
-                      color: accentColor
-                  }}
-                >
+            <div className="analysis-chips">
+              {part.keywords.map((keyword) => (
+                <span key={keyword} className="analysis-chip">
                   {keyword}
                 </span>
               ))}
             </div>
           ) : null}
-          <div
-            className="whitespace-pre-wrap text-base leading-7"
-            style={{ color: textColor }}
-          >
-            {part.body || "(내용이 비어 있습니다)"}
-          </div>
         </AccordionItem>
       ))}
     </Accordion>

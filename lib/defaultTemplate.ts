@@ -10,7 +10,8 @@ export const defaultTemplate: Report = {
     createdAt: "2025-12-15",
     templateVersion: "v1",
     author: "Saju Lab",
-    source: "Demo"
+    source: "Demo",
+    consultUrl: ""
   },
   subject: {
     name: "김해인",

@@ -44,6 +44,82 @@ body {
   background-color: transparent;
 }
 
+.analysis-card {
+  --title: #2b2b2b;
+  --body: #3a3a3a;
+  --muted: #6b625a;
+  --accent: #c65a2e;
+  --cardBg: #fbf6ef;
+  --border: rgba(0, 0, 0, 0.06);
+  font-family: Pretendard, "Noto Sans KR", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--body);
+  background-color: var(--cardBg);
+  border-color: var(--border);
+}
+
+.analysis-title {
+  color: var(--title);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.analysis-def {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.analysis-highlight {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  background: rgba(198, 90, 46, 0.08);
+  color: var(--body);
+  font-weight: 600;
+}
+
+.analysis-highlight p + p {
+  margin-top: 8px;
+}
+
+.analysis-body {
+  margin-top: 10px;
+  color: var(--body);
+}
+
+.analysis-chips {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.analysis-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 90, 46, 0.35);
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: transparent;
+}
+
+.analysis-muted {
+  color: var(--muted);
+}
+
+.analysis-table th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.analysis-table td {
+  color: var(--body);
+}
+
 @media print {
   html,
   body {

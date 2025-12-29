@@ -67,7 +67,7 @@ function buildPrompt(report: Report) {
   }));
   const annual = report.annual?.sections ?? {};
 
-  return `다음은 사주 분석 원문입니다. 요약하지 말고 내용은 그대로 유지하되, 문장을 정렬하고 핵심 키워드와 강조 문장을 만들어 주세요.\n\n요청 사항:\n- 요약 금지 (원문 내용을 삭제하거나 축약하지 말 것)\n- 문장 정리/정돈 (중복 제거 및 문장 흐름 정돈 가능)\n- 키워드 5~8개 생성\n- 강조 문장 1~3개 생성 (중요 포인트를 짧게)\n- 필요하면 표(테이블) 형식으로 정리해도 됨\n- 마크다운 강조 기호(**) 사용 금지\n- 출력은 반드시 JSON만\n\n입력(JSON):\n{\n  "dayMasterText": ${JSON.stringify(
+  return `다음은 사주 분석 원문입니다. 요약하지 말고 내용은 그대로 유지하되, 문장을 정렬하고 핵심 키워드와 강조 문장을 만들어 주세요.\n\n요청 사항:\n- 요약 금지 (원문 내용을 삭제하거나 축약하지 말 것)\n- 문장 정리/정돈 (중복 제거 및 문장 흐름 정돈 가능)\n- 키워드 5~8개 생성 (짧은 명사 위주)\n- 강조 문장 2~3개 생성 (각 문장은 짧고 간결하게, 40자 내외)\n- 강조 문장은 광고/과장 표현 금지, 느낌표 사용 금지\n- 강조 문장은 목록/번호 없이 순수 문장으로 작성\n- 본문(body)은 문단 2~4개로 나누고 줄바꿈 유지\n- 필요하면 표(테이블) 형식으로 정리해도 됨\n- 마크다운 강조 기호(**) 사용 금지\n- 출력은 반드시 JSON만\n\n입력(JSON):\n{\n  "dayMasterText": ${JSON.stringify(
     report.dashboard.part1.dayMasterAnalysis ?? ""
   )},\n  "dayPillarText": ${JSON.stringify(
     report.dashboard.part1.dayPillarAnalysis ?? ""

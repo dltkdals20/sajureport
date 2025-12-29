@@ -22,6 +22,12 @@ const shadowMap: Record<string, string> = {
 export function PreviewPanel({ report }: PreviewPanelProps) {
   const theme = report.theme;
   const baseFontSize = Math.max(theme.typography.baseFontSize, 16);
+  const consultUrl = report.reportMeta.consultUrl?.trim();
+  const canConsult = Boolean(consultUrl);
+  const dayMasterHighlights = report.dashboard.part1.dayMasterHighlights ?? [];
+  const dayMasterHighlightItems = dayMasterHighlights.slice(0, 3);
+  const dayPillarHighlights = report.dashboard.part1.dayPillarHighlights ?? [];
+  const dayPillarHighlightItems = dayPillarHighlights.slice(0, 3);
   const cardStyle: React.CSSProperties = {
     backgroundColor: theme.colors.card,
     borderColor: theme.colors.border,
@@ -70,6 +76,29 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
         borderRadius: theme.ui.cardRadius
       }
     : {};
+
+  const handleConsultClick = () => {
+    if (!consultUrl) return;
+    window.open(consultUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const consultButtonStyle: React.CSSProperties = {
+    backgroundColor: canConsult ? theme.colors.accent : theme.colors.border,
+    color: canConsult ? "#fff" : theme.colors.mutedText
+  };
+
+  const analysisCardStyle: React.CSSProperties = {
+    ...cardStyle,
+    backgroundColor: "var(--cardBg)",
+    borderColor: "var(--border)"
+  };
+
+  const analysisColors = {
+    title: "#2B2B2B",
+    body: "#3A3A3A",
+    muted: "#6B625A",
+    accent: "#C65A2E"
+  };
 
   return (
     <div className="rounded-3xl border border-neutral-200/60 bg-white/40 p-3 sm:p-4">
@@ -177,6 +206,26 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             mutedText={theme.colors.mutedText}
           />
 
+          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
+            <p className="mb-3 text-base font-semibold" style={{ color: theme.colors.text }}>
+              상담 신청
+            </p>
+            <button
+              type="button"
+              onClick={handleConsultClick}
+              disabled={!canConsult}
+              className="w-full rounded-2xl px-6 py-4 text-base font-semibold transition hover:opacity-90 disabled:cursor-not-allowed disabled:hover:opacity-100 sm:text-lg"
+              style={consultButtonStyle}
+            >
+              상담 신청하기
+            </button>
+            {!canConsult && (
+              <p className="mt-2 text-sm" style={{ color: theme.colors.mutedText }}>
+                reportMeta.consultUrl에 상담 링크를 넣어주세요.
+              </p>
+            )}
+          </div>
+
           <div className="grid gap-6 lg:grid-cols-2">
             <PillarsTable
               table={report.dashboard.part1.pillars.table}
@@ -224,89 +273,80 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             </div>
           </div>
 
-          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
-            <p className="mb-2 text-base font-semibold" style={{ color: theme.colors.text }}>
-              일간 분석
-            </p>
-            {report.dashboard.part1.dayMasterHighlights?.length ? (
-              <div className="mb-3 space-y-2">
-                {report.dashboard.part1.dayMasterHighlights.map((text) => (
-                  <p
-                    key={text}
-                    className="text-lg sm:text-xl font-semibold"
-                    style={{ color: theme.colors.accent }}
-                  >
-                    {text}
-                  </p>
+          <div
+            style={analysisCardStyle}
+            className="analysis-card border px-3 py-4 sm:px-6 sm:py-6"
+          >
+            <p className="analysis-title mb-2">일간 분석</p>
+            <div className="analysis-def mb-4 space-y-1">
+              <p>
+                일간은 ‘나’ 자체를 뜻하는 핵심 값이라, 타고난 기질과 에너지 방향(기본 성향)을 보여줘요.
+              </p>
+              <p>
+                그래서 어떤 상황에서도 반복되는 내 반응 패턴과 강점을 이해하는 기준이 됩니다.
+              </p>
+            </div>
+            {dayMasterHighlightItems.length ? (
+              <div className="analysis-highlight">
+                {dayMasterHighlightItems.map((text) => (
+                  <p key={text}>{text}</p>
                 ))}
               </div>
             ) : null}
+            <div className="analysis-body whitespace-pre-wrap">
+              {report.dashboard.part1.dayMasterAnalysis || "(내용이 비어 있습니다)"}
+            </div>
             {report.dashboard.part1.dayMasterKeywords?.length ? (
-              <div className="mb-3 flex flex-wrap gap-2">
+              <div className="analysis-chips">
                 {report.dashboard.part1.dayMasterKeywords.map((keyword) => (
-                  <span
-                    key={keyword}
-                    className="rounded-full px-3 py-1 text-sm"
-                    style={{
-                      backgroundColor: `${theme.colors.accent}22`,
-                      color: theme.colors.accent
-                    }}
-                  >
+                  <span key={keyword} className="analysis-chip">
                     {keyword}
                   </span>
                 ))}
               </div>
             ) : null}
-            <div className="whitespace-pre-wrap text-base leading-7">
-              {report.dashboard.part1.dayMasterAnalysis || "(내용이 비어 있습니다)"}
-            </div>
           </div>
 
-          <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
-            <p className="mb-2 text-base font-semibold" style={{ color: theme.colors.text }}>
-              일주 분석
-            </p>
-            {report.dashboard.part1.dayPillarHighlights?.length ? (
-              <div className="mb-3 space-y-2">
-                {report.dashboard.part1.dayPillarHighlights.map((text) => (
-                  <p
-                    key={text}
-                    className="text-lg sm:text-xl font-semibold"
-                    style={{ color: theme.colors.accent }}
-                  >
-                    {text}
-                  </p>
+          <div
+            style={analysisCardStyle}
+            className="analysis-card border px-3 py-4 sm:px-6 sm:py-6"
+          >
+            <p className="analysis-title mb-2">일주 분석</p>
+            <div className="analysis-def mb-4 space-y-1">
+              <p>
+                일주는 타고난 기질과 생활 습관이 만나는 지점이라, 개인의 성향을 아주 현실적으로 설명해줘요.
+              </p>
+              <p>그래서 성격 테스트보다 더 “정확하게 체감된다”는 반응이 자주 나옵니다.</p>
+            </div>
+            {dayPillarHighlightItems.length ? (
+              <div className="analysis-highlight">
+                {dayPillarHighlightItems.map((text) => (
+                  <p key={text}>{text}</p>
                 ))}
               </div>
             ) : null}
+            <div className="analysis-body whitespace-pre-wrap">
+              {report.dashboard.part1.dayPillarAnalysis || "(내용이 비어 있습니다)"}
+            </div>
             {report.dashboard.part1.dayPillarKeywords?.length ? (
-              <div className="mb-3 flex flex-wrap gap-2">
+              <div className="analysis-chips">
                 {report.dashboard.part1.dayPillarKeywords.map((keyword) => (
                   <span
                     key={keyword}
-                    className="rounded-full px-3 py-1 text-sm"
-                    style={{
-                      backgroundColor: `${theme.colors.accent}22`,
-                      color: theme.colors.accent
-                    }}
+                    className="analysis-chip"
                   >
                     {keyword}
                   </span>
                 ))}
               </div>
             ) : null}
-            <div className="whitespace-pre-wrap text-base leading-7">
-              {report.dashboard.part1.dayPillarAnalysis || "(내용이 비어 있습니다)"}
-            </div>
           </div>
 
           <YongsinTable
             yongsin={report.dashboard.part1.yongsin}
-            cardStyle={cardStyle}
-            borderColor={theme.colors.border}
-            textColor={theme.colors.text}
-            mutedText={theme.colors.mutedText}
-            accentColor={theme.colors.accent}
+            cardStyle={analysisCardStyle}
+            borderColor="var(--border)"
+            className="analysis-card"
           />
 
           <div style={{ display: "grid", gap: sectionGap }}>
@@ -316,17 +356,34 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
               </p>
               <TextPartsView
                 parts={report.texts}
-                cardStyle={cardStyle}
-                textColor={theme.colors.text}
-                accentColor={theme.colors.accent}
+                cardStyle={analysisCardStyle}
+                textColor={analysisColors.body}
               />
             </div>
             <AnnualFortuneView
               annual={report.annual}
-              cardStyle={cardStyle}
-              textColor={theme.colors.text}
-              accentColor={theme.colors.accent}
+              cardStyle={analysisCardStyle}
+              textColor={analysisColors.body}
             />
+            <div style={cardStyle} className="border px-3 py-4 sm:px-6 sm:py-6">
+              <p className="mb-3 text-base font-semibold" style={{ color: theme.colors.text }}>
+                상담 신청
+              </p>
+              <button
+                type="button"
+                onClick={handleConsultClick}
+                disabled={!canConsult}
+                className="w-full rounded-2xl px-6 py-4 text-base font-semibold transition hover:opacity-90 disabled:cursor-not-allowed disabled:hover:opacity-100 sm:text-lg"
+                style={consultButtonStyle}
+              >
+                상담 신청하기
+              </button>
+              {!canConsult && (
+                <p className="mt-2 text-sm" style={{ color: theme.colors.mutedText }}>
+                  reportMeta.consultUrl에 상담 링크를 넣어주세요.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
