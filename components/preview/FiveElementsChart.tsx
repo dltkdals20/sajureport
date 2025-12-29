@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Bar,
   BarChart,
+  LabelList,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -59,7 +60,15 @@ export function FiveElementsChart({
               }}
               formatter={(value) => [`${value}%`, "비율"]}
             />
-            <Bar dataKey="ratio" fill={accentColor} radius={[8, 8, 8, 8]} />
+            <Bar dataKey="ratio" fill={accentColor} radius={[8, 8, 8, 8]}>
+              <LabelList
+                dataKey="count"
+                position="right"
+                formatter={(value: number) => `${value}개`}
+                fill={textColor}
+                fontSize={12}
+              />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
