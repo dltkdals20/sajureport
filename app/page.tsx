@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
+import { useReactToPrint } from "react-to-print";
 import { EditorPanel } from "../components/EditorPanel";
 import { PreviewPanel } from "../components/PreviewPanel";
 import { Button } from "../components/ui/button";
@@ -52,7 +53,23 @@ function safeParseJson(text: string) {
 }
 
 // 인증 폼 컴포넌트
-function AuthForm() {
+function AuthForm({ onAuthenticate }: { onAuthenticate: () => void }) {
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === "admin123") {
+      // localStorage에 인증 정보 저장
+      localStorage.setItem("saju_auth_token", "authenticated");
+      onAuthenticate();
+      setPassword("");
+      setError("");
+    } else {
+      setError("암호가 올바르지 않습니다.");
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-md space-y-6 rounded-3xl border border-neutral-200 bg-white/70 p-8 shadow-sm">
@@ -64,24 +81,35 @@ function AuthForm() {
             관리자 인증이 필요합니다.
           </p>
         </div>
-        <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
-          관리자 암호를 입력하세요.
-        </div>
-        <form className="space-y-3">
+        {error && (
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+            {error}
+          </div>
+        )}
+        {!error && (
+          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+            관리자 암호를 입력하세요.
+          </div>
+        )}
+        <form className="space-y-3" onSubmit={handleSubmit}>
           <div className="space-y-1">
             <label className="text-xs font-medium text-neutral-600">
               관리자 암호
             </label>
             <input
               type="password"
-              name="key"
               placeholder="관리자 암호를 입력하세요"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               className="h-10 w-full rounded-xl border border-neutral-200 bg-white px-3 text-sm"
             />
           </div>
           <button
             type="submit"
-            className="w-full rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-white"
+            className="w-full rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-600 transition"
           >
             인증
           </button>
@@ -110,6 +138,15 @@ function DashboardContent({ adminSecret }: { adminSecret: string }) {
   const [publishUrl, setPublishUrl] = React.useState<string | null>(null);
   const canPublish =
     !isJsonDirty && !parseError && validationErrors.length === 0;
+
+  // PDF 출력을 위한 ref
+  const printRef = React.useRef<HTMLDivElement>(null);
+
+  // react-to-print 설정
+  const reactToPrintFn = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `사주리포트_${report.reportMeta.title || '리포트'}`,
+  });
 
   React.useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
@@ -325,8 +362,10 @@ function DashboardContent({ adminSecret }: { adminSecret: string }) {
 
   const handlePrint = () => {
     setActiveTab("preview");
-    window.setTimeout(() => {
-      window.print();
+    setTimeout(() => {
+      if (reactToPrintFn) {
+        reactToPrintFn();
+      }
     }, 100);
   };
 
@@ -454,12 +493,12 @@ function DashboardContent({ adminSecret }: { adminSecret: string }) {
             onAnnualChange={updateAnnual}
           />
         </div>
-        <div className="max-h-[calc(100vh-180px)] overflow-y-auto pr-2 scrollbar-thin print-full">
+        <div className="max-h-[calc(100vh-180px)] overflow-y-auto pr-2 scrollbar-thin print-full" ref={printRef}>
           <PreviewPanel report={report} />
         </div>
       </div>
 
-      <div className="mt-6 lg:hidden print-hidden">
+      <div className="mt-6 lg:hidden">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList>
             <TabsTrigger value="data">데이터</TabsTrigger>
@@ -501,23 +540,35 @@ function DashboardContent({ adminSecret }: { adminSecret: string }) {
 
 // 메인 컴포넌트
 export default function Home() {
-  const searchParams = useSearchParams();
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const [adminSecret, setAdminSecret] = React.useState("");
+  const [isMounted, setIsMounted] = React.useState(false);
 
   React.useEffect(() => {
-    const secret = searchParams.get("key");
-    const adminSecretEnv = process.env.NEXT_PUBLIC_ADMIN_SECRET;
-
-    if (adminSecretEnv && secret === adminSecretEnv) {
+    // 클라이언트 사이드에서만 localStorage 확인
+    const authToken = localStorage.getItem("saju_auth_token");
+    if (authToken === "authenticated") {
       setIsAuthenticated(true);
-      setAdminSecret(secret);
     }
-  }, [searchParams]);
+    setIsMounted(true);
+  }, []);
 
-  if (!isAuthenticated) {
-    return <AuthForm />;
+  const handleAuthenticate = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("saju_auth_token");
+    setIsAuthenticated(false);
+  };
+
+  // 마운트되기 전에는 아무것도 렌더링하지 않음
+  if (!isMounted) {
+    return null;
   }
 
-  return <DashboardContent adminSecret={adminSecret} />;
+  if (!isAuthenticated) {
+    return <AuthForm onAuthenticate={handleAuthenticate} />;
+  }
+
+  return <DashboardContent adminSecret="authenticated" />;
 }

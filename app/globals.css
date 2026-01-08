@@ -127,10 +127,14 @@ body {
     overflow: visible !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
   }
 
-  body {
-    background: white !important;
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .print-hidden {
@@ -141,5 +145,36 @@ body {
     max-height: none !important;
     overflow: visible !important;
     height: auto !important;
+  }
+
+  /* 스크롤 해제 */
+  * {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* 페이지 나눔 방지 - 중요! */
+  .analysis-card,
+  div[style*="border"],
+  div[class*="rounded-"],
+  div[class*="border"] {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 테이블 페이지 나눔 방지 */
+  table {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 섹션 간 적절한 여백 */
+  .analysis-card + .analysis-card {
+    margin-top: 20px !important;
+  }
+
+  /* 불필요한 여백 제거 */
+  .rounded-3xl {
+    border-radius: 0 !important;
   }
 }
