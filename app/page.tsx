@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { EditorPanel } from "../components/EditorPanel";
 import { PreviewPanel } from "../components/PreviewPanel";
 import { Button } from "../components/ui/button";
@@ -50,7 +51,48 @@ function safeParseJson(text: string) {
   }
 }
 
-export default function Home() {
+// 인증 폼 컴포넌트
+function AuthForm() {
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="w-full max-w-md space-y-6 rounded-3xl border border-neutral-200 bg-white/70 p-8 shadow-sm">
+        <div className="space-y-2">
+          <h1 className="font-display text-2xl font-semibold text-neutral-900">
+            사주 리포트 빌더
+          </h1>
+          <p className="text-sm text-neutral-500">
+            관리자 인증이 필요합니다.
+          </p>
+        </div>
+        <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+          관리자 암호를 입력하세요.
+        </div>
+        <form className="space-y-3">
+          <div className="space-y-1">
+            <label className="text-xs font-medium text-neutral-600">
+              관리자 암호
+            </label>
+            <input
+              type="password"
+              name="key"
+              placeholder="관리자 암호를 입력하세요"
+              className="h-10 w-full rounded-xl border border-neutral-200 bg-white px-3 text-sm"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-white"
+          >
+            인증
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// 대시보드 콘텐츠 컴포넌트
+function DashboardContent({ adminSecret }: { adminSecret: string }) {
   const [report, setReport] = React.useState<Report>(() =>
     cloneReport(defaultTemplate)
   );
@@ -293,11 +335,6 @@ export default function Home() {
       setPublishError("먼저 Validate를 완료한 뒤 Publish 해주세요.");
       return;
     }
-    const adminSecret = process.env.NEXT_PUBLIC_ADMIN_SECRET;
-    if (!adminSecret) {
-      setPublishError("NEXT_PUBLIC_ADMIN_SECRET이 설정되지 않았습니다.");
-      return;
-    }
 
     setPublishError(null);
     setIsPublishing(true);
@@ -460,4 +497,27 @@ export default function Home() {
       </div>
     </div>
   );
+}
+
+// 메인 컴포넌트
+export default function Home() {
+  const searchParams = useSearchParams();
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [adminSecret, setAdminSecret] = React.useState("");
+
+  React.useEffect(() => {
+    const secret = searchParams.get("key");
+    const adminSecretEnv = process.env.NEXT_PUBLIC_ADMIN_SECRET;
+
+    if (adminSecretEnv && secret === adminSecretEnv) {
+      setIsAuthenticated(true);
+      setAdminSecret(secret);
+    }
+  }, [searchParams]);
+
+  if (!isAuthenticated) {
+    return <AuthForm />;
+  }
+
+  return <DashboardContent adminSecret={adminSecret} />;
 }
