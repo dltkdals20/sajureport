@@ -570,5 +570,6 @@ export default function Home() {
     return <AuthForm onAuthenticate={handleAuthenticate} />;
   }
 
-  return <DashboardContent adminSecret="authenticated" />;
+  const adminSecret = process.env.NEXT_PUBLIC_ADMIN_SECRET ?? "";
+  return <DashboardContent adminSecret={adminSecret} />;
 }
