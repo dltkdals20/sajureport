@@ -347,11 +347,6 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
             >
               상담 신청하기
             </button>
-            {!canConsult && (
-              <p className="mt-2 text-sm" style={{ color: theme.colors.mutedText }}>
-                reportMeta.consultUrl에 상담 링크를 넣어주세요.
-              </p>
-            )}
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -594,11 +589,6 @@ export function PreviewPanel({ report }: PreviewPanelProps) {
               >
                 상담 신청하기
               </button>
-              {!canConsult && (
-                <p className="mt-2 text-sm" style={{ color: theme.colors.mutedText }}>
-                  reportMeta.consultUrl에 상담 링크를 넣어주세요.
-                </p>
-              )}
             </div>
           </div>
         </div>
