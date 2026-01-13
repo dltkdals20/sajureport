@@ -5,7 +5,7 @@ export const defaultTemplate: Report = {
   schemaVersion: "1.0",
   reportMeta: {
     reportId: "demo-2026-001",
-    title: "2026 신년 운세 리포트",
+    title: "길쌤 2026 병오년 사주 리포트",
     language: "ko",
     createdAt: "2025-12-15",
     templateVersion: "v1",

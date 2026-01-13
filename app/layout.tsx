@@ -15,7 +15,7 @@ const bodyFont = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "Saju Report Dashboard Builder",
+  title: "길쌤 2026 병오년 사주 리포트",
   description: "Build and preview structured saju reports"
 };
 
